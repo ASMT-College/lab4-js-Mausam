@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Submission</title>
+    <style>
+      .error {
+        color: red;
+        font-size: 0.9em;
+        height: 0px;
+        display: none;
+      }
+      .formdiv {
+        display: flex;
+        justify-content: center;
+        inset: 0;
+        width: 100vh;
+        height: 100vh;
+        margin: auto;
+        align-items: center;
+        flex-direction: column;
+      }
+      fieldset {
+        background-color: #eeeeee;
+        border-radius: 10px;
+      }
+      legend {
+        background-color: black;
+        color: white;
+        padding: 3px;
+      }
+      input {
+        margin: 5px;
+      }
+      h2 {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      body {
+        background-color: rgb(102, 74, 128);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="formdiv">
+      <h2>Form Submission</h2>
+      <form class="form" id="form" onsubmit="return validateForm()">
+        <fieldset>
+          <legend>SignUp</legend>
+          <!-- Username -->
+          <label for="username">Username: </label>
+          <br />
+          <input type="text" id="username" placeholder="Username" />
+          <div id="username-error" class="error"></div>
+          <br /><br />
+          <!-- Name -->
+          <label for="name">Name: </label>
+          <br />
+          <input type="text" id="name" placeholder="Name" />
+          <div id="name-error" class="error"></div>
+          <br /><br />
+          <!-- Email -->
+          <label for="email">Email: </label>
+          <br />
+          <input type="text" id="email" placeholder="Email" />
+          <div id="email-error" class="error"></div>
+          <br /><br />
+          <!-- Password -->
+          <label for="password">Password: </label>
+          <br />
+          <input type="password" id="password" placeholder="Password" />
+          <div id="password-error" class="error"></div>
+          <br /><br />
+          <!-- Confirm Password -->
+          <label for="confirm_password">Confirm Password: </label>
+          <br />
+          <input
+            type="password"
+            id="confirm_password"
+            placeholder="Confirm Password"
+          />
+          <div id="confirm-password-error" class="error"></div>
+          <br /><br />
+          <!-- Phone no -->
+          <label for="phone">Phone No.: </label>
+          <br />
+          <input
+            type="tel"
+            id="phone"
+            placeholder="Phone Number"
+            pattern="[0-9]{10}"
+          />
+          <br /><br />
+          <!-- Gender -->
+          <label for="gender">Gender: </label>
+          <label for="male">M</label>
+          <input type="radio" id="male" value="male" name="gender" />
+          <label for="female">F</label>
+          <input type="radio" id="female" value="female" name="gender" />
+          <br /><br />
+          <!-- Hobbies -->
+          <label for="hobbies">Hobbies: </label>
+          <br />
+          <input type="checkbox" id="cricket" />
+          <label for="cricket">Cricket</label>
+          <input type="checkbox" id="taekwondo" />
+          <label for="taekwondo">Taekwondo</label>
+          <input type="checkbox" id="mobile-legend" />
+          <label for="mobile-legend">Mobile Legends</label>
+          <br /><br />
+          <!-- Country -->
+          <label for="country">Country: </label>
+          <select name="country" id="country">
+            <option value="nepal">Nepal</option>
+            <option value="japan">Japan</option>
+            <option value="korea">Korea</option>
+            <option value="india">India</option>
+          </select>
+          <br /><br />
+          <!-- Submit -->
+          <input type="submit" value="Submit" />
+        </fieldset>
+      </form>
+    </div>
+    <script>
+      function validateForm() {
+        let isValid = true;
+
+        // Get input values
+        const username = document.getElementById('username').value;
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+
+        // Regular expressions for validation
+        const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_-]{2,15}$/;
+        const nameRegex = /^[a-zA-Z\s]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Clear previous error messages
+        document.getElementById('username-error').style.display = 'none';
+        document.getElementById('name-error').style.display = 'none';
+        document.getElementById('email-error').style.display = 'none';
+        document.getElementById('password-error').style.display = 'none';
+        document.getElementById('confirm-password-error').style.display = 'none';
+
+        // Validate username
+        if (!usernameRegex.test(username)) {
+          document.getElementById('username-error').textContent =
+            'Invalid UserName';
+          document.getElementById('username-error').style.display = 'block';
+          isValid = false;
+        }
+
+        // Validate name
+        if (!nameRegex.test(name)) {
+          document.getElementById('name-error').textContent =
+            'Invalid Name';
+          document.getElementById('name-error').style.display = 'block';
+          isValid = false;
+        }
+
+        // Validate email
+        if (!emailRegex.test(email)) {
+          document.getElementById('email-error').textContent =
+            'Invalid email address.';
+          document.getElementById('email-error').style.display = 'block';
+          isValid = false;
+        }
+
+        // Validate password length
+        if (password.length < 8 || password.length > 16) {
+          document.getElementById('password-error').textContent =
+            'Password must be between 8 and 16 characters.';
+          document.getElementById('password-error').style.display = 'block';
+          isValid = false;
+        }
+
+        // Validate password match
+        if (password !== confirmPassword) {
+          document.getElementById('confirm-password-error').textContent =
+            'Passwords do not match.';
+          document.getElementById('confirm-password-error').style.display = 'block';
+          isValid = false;
+        }
+        return isValid;
+      }
+    </script>
+  </body>
+</html>
